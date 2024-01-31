@@ -1,0 +1,37 @@
+<html>
+<head>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+</head>
+<body>
+    <div x-data="example">
+      <input type="text" x-model="library" aria-label="message"/>
+      <button x-on:click="append()">追加</button>
+      <h2 x-text="library"></h2>
+      <ul>
+        <template x-for="lib in libraries">
+          <li x-text="lib"></li>
+        </template>
+      </ul>
+      <template x-if="hasAlpine">
+        <strong>I ❤️ Alpine</strong>
+      </template>
+    </div>
+    <script>
+      document.addEventListener("alpine:init", () => {
+        Alpine.data('example', () => ({
+          // data
+          library: 'Alpine.js',
+          libraries: ['Vue', 'Nuxt'],
+          // mounted
+          init() {
+            console.log('hello')
+          },
+          // computed
+          get hasAlpine() { return this.libraries.some(lib => lib.includes("Alpine.js")) },
+          // methods
+          append() { this.libraries.push(this.library) }
+        }))
+      })
+    </script>
+</body>
+</html>
